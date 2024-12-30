@@ -22,6 +22,8 @@ function AddBlogForm() {
   const [loader,setLoader]=useState(false)
   const [error,setError]=useState("")
   const navigate =useNavigate()
+  const [imageType,setImageType]=useState("Import Image from Device")
+
 
   useEffect(()=>{
     if(slug.length>36)setAllowUpload1(true)
@@ -29,7 +31,7 @@ function AddBlogForm() {
   },[slug])
 
   useEffect(()=>{
-    if(content.length>900)setAllowUpload2(true)
+    if(content.length>100000)setAllowUpload2(true)
     else setAllowUpload2(false)
   },[content])
 
@@ -40,10 +42,15 @@ function AddBlogForm() {
   };
 
   const handlefileUpload = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setImage(selectedFile);
-      setPreviewURL(URL.createObjectURL(selectedFile)); 
+    if(imageType==="Import Image from Device"){
+      const selectedFile = e.target.files[0];
+      if (selectedFile) {
+        setImage(selectedFile);
+        setPreviewURL(URL.createObjectURL(selectedFile)); 
+      }
+    }
+    else{
+      setImage(e.target.value)
     }
   };
 
@@ -63,12 +70,16 @@ function AddBlogForm() {
     window.scrollTo({ top: 0, behavior: 'instant' });
     setError("")
     setLoader(true)
+    let image_copy=image
+    let imgID="!";
+    if(imageType==="Import Image from Device"){
+
       const file = await appwriteService.uploadFile(image);
-      const imgID=file.$id
-    
-    if (!heading || !slug || !content || !imgID) {
+      imgID=file.$id
+      image_copy="!"
+    }
+    if (!heading || !slug || !content || !image) {
       setError("Please fill all the required fields and upload an image.");
-      console.log({heading,slug,content,imgID})
       return;
     }
 
@@ -79,7 +90,8 @@ function AddBlogForm() {
       content,
       status,
       userID:userData?.userID || "guest",
-      userName:userData?.name || "guest"
+      userName:userData?.name || "guest",
+      image_real_url:image_copy,
     };
     try {
       const response=await appwriteService.createBlog(blogData)
@@ -118,91 +130,134 @@ function AddBlogForm() {
   }
 
   return (
+<div>
+  {loader ? (
+    <div className="flex items-center flex-col m-10 min-h-screen">
+      <h2 className="text-xl text-gray-400 m-10">Uploading the blog....</h2>
+      <CircularLoader />
+    </div>
+  ) : (
     <div>
-      {loader?(
-        <div className="flex items-center flex-col m-10 min-h-screen">
-          <h2 className="text-xl text-gray-400 m-10">Uploading the blog....</h2>
-          <CircularLoader/>
-        </div>
-      ):(
-        <div>
-    <div className="max-w-xl mb-52 mx-auto p-6 bg-white shadow-md rounded-lg my-5 mt-10">
-      {error &&(
-        <div className="flex p-2">
-          <h2 className="text-red-600 text-sm">{error}</h2>
-        </div>
-      )
-      }
-      <h2 className="text-2xl font-semibold text-blue-700 mb-6">Add Blog</h2>
-      <form onSubmit={(allowUpload1 || allowUpload2)
-        ?allowUpload1?handleSize1:allowUpload2?handleSize2:handleSubmit:handleSubmit
-      } className="space-y-4">
-        <Input
-          label="Heading"
-          type="text"
-          value={heading}
-          onChange={handleHeadingChange}
-          required
-          className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-lg h-8"
-        />
-
-        <Input
-          label="Slug"
-          type="text"
-          value={slug}
-          readOnly
-          className="w-full h-8 bg-gray-100 outline-none rounded-lg"
-        />
-
-        <label className="inline-block text-sm font-medium text-gray-600 mb-3 pl-1" htmlFor="ta-1">Content</label>
-        <textarea
-          onChange={(e) => setContent(e.target.value)}
-          id="ta-1"
-          className="w-full h-40 p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none overflow-y-auto text-gray-800"
-          placeholder="Type something..."
-        ></textarea>
-
-        <Input
-          label="Upload Image"
-          type="file"
-          onChange={handlefileUpload}
-          accept=".jpg,.png,.gif,.jpeg"
-          required
-          className="file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white file:cursor-pointer hover:file:bg-blue-700"
-        />
-
-        {previewURL && (
-          <div className="w-full mb-4 flex justify-center">
-            <img
-              src={previewURL}
-              alt={heading}
-              className="rounded-lg"
-            />
+      <div className="max-w-xl mb-52 mx-auto p-6 bg-white shadow-md rounded-lg my-5 mt-10">
+        {error && (
+          <div className="flex p-2">
+            <h2 className="text-red-600 text-sm">{error}</h2>
           </div>
         )}
-
-        <Select
-          label="Status"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          options={["active", "inactive"]}
-          required
-          className="w-full"
-        />
-
-        <Button
-          type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        <h2 className="text-2xl font-semibold text-blue-700 mb-6">Add Blog</h2>
+        <form
+          onSubmit={
+            allowUpload1 || allowUpload2
+              ? allowUpload1
+                ? handleSize1
+                : allowUpload2
+                ? handleSize2
+                : handleSubmit
+              : handleSubmit
+          }
+          className="space-y-4"
         >
-          Submit
-        </Button>
-      </form>
+          <div className="relative">
+            <Input
+              label="Heading"
+              type="text"
+              value={heading}
+              onChange={handleHeadingChange}
+              required
+              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-lg h-8"
+            />
+            <span className="absolute right-2 top-2 text-sm text-gray-500">
+              {heading.length}
+            </span>
+          </div>
+
+          <div className="relative">
+            <Input
+              label="Slug"
+              type="text"
+              value={slug}
+              readOnly
+              className="w-full h-8 bg-gray-100 outline-none rounded-lg"
+            />
+            <span className="absolute right-2 top-2 text-sm text-gray-500">
+              {slug.length}/36
+            </span>
+          </div>
+
+          <div className="relative">
+            <label
+              className="inline-block text-sm font-medium text-gray-600 mb-3 pl-1"
+              htmlFor="ta-1"
+            >
+              Content
+            </label>
+            <textarea
+              onChange={(e) => setContent(e.target.value)}
+              id="ta-1"
+              className="w-full h-40 p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none overflow-y-auto text-gray-800"
+              placeholder="Type something..."
+            ></textarea>
+            <span className="absolute right-2 bottom-2 text-sm text-gray-500">
+              {content.length}/100000
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-6 items-center ">
+            <Select
+              label="Upload Image"
+              value={imageType}
+              onChange={(e) => setImageType(e.target.value)}
+              options={["Import Image from Device", "Import Image from URL"]}
+              required
+              className="w-full"
+            />
+            {imageType === "Import Image from Device" ? (
+              <Input
+                label=""
+                type="file"
+                onChange={handlefileUpload}
+                accept=".jpg,.png,.gif,.jpeg"
+                required
+                className="file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white file:cursor-pointer hover:file:bg-blue-700"
+              />
+            ) : (
+              <Input
+                label="Image URL"
+                required
+                onChange={handlefileUpload}
+              ></Input>
+            )}
+          </div>
+
+          {previewURL && (
+            <div className="w-full mb-4 flex justify-center">
+              <img src={previewURL} alt={heading} className="rounded-lg" />
+            </div>
+          )}
+
+          <Select
+            label="Status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            options={["active", "inactive"]}
+            required
+            className="w-full"
+          />
+
+          <Button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Submit
+          </Button>
+        </form>
+      </div>
     </div>
-    </div>)
-    }
-    {/* <ClearStorageButton>BUTTON</ClearStorageButton> */}
-    </div>
+  )}
+</div>
+
   );
 }
 
 export default AddBlogForm;
+{/* <ClearStorageButton>BUTTON</ClearStorageButton> */}

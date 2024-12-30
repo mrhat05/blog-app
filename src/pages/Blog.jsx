@@ -25,8 +25,14 @@ function Blog() {
       setLoader(true)
       const response=await appwriteService.getBlog(slug)
 
-      const image=await appwriteService.getFilePreview(response.image_url)
-      const image_URL=image.replace("preview","view")
+      let image_URL="";
+      if(response.image_url!="!"){
+      let image=await appwriteService.getFilePreview(response.image_url)
+      image_URL=image.replace("preview","view")
+      }
+      else{
+        image_URL=response.image_real_url
+      }
 
       const data={
         title:response.title,
@@ -61,7 +67,7 @@ function Blog() {
           <div className='min-h-screen text-xl flex justify-center m-10'>Blog not found.</div>
         ):(
           <div className='mb-52 mt-10'>
-            <BlogComponent uploaderName={blogData.userName} uploadTime={blogData.createdAt} blogTitle={blogData.title} blogContent={blogData.content} blogImage={blogData.image_url} userID={blogData.userID} slug={slug} imageID={blogData.imageID} isActive={blogData.status} />
+            <BlogComponent uploaderName={blogData.userName} uploadTime={blogData.createdAt} blogTitle={blogData.title} blogContent={blogData.content} blogImage={blogData.image_url} userID={blogData.userID} slug={slug} imageID={blogData.imageID} isActive={blogData.status}  />
           </div>
         )
       }

@@ -7,7 +7,7 @@ const Select=forwardRef(({label,options,classNames,...props},ref)=>{
         {
             label?(
                 <div>
-                    <label htmlFor={id} className='inline-block mb-1 pl-1'>
+                    <label htmlFor={id} className='inline-block mb-3 pl-1text-sm font-medium text-gray-600'>
                         {label}
                     </label>
                 </div>

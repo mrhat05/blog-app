@@ -88,8 +88,8 @@ const SignUp = () => {
                             id={id1}
                             placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} required
                           />
-                          <button
-                            className="w-1/12 border-r border-t border-b border-gray-200 px-2 py-2 rounded-tr-lg rounded-br-lg absolute right-0 top-0 h-full"
+                          <button type="button"
+                            className="w-1/12 border-r border-t border-b border-gray-200 px-2 py-2 rounded-tr-lg rounded-br-lg absolute right-0 top-0 h-full flex justify-center items-center"
                           >
                             <FontAwesomeIcon onClick={handleShowPassword} icon={showPassword?faEye:faEyeSlash} />
                           </button>

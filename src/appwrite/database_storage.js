@@ -64,11 +64,11 @@ export class DataService{
         }
     }
 
-    async createBlog({title,slug,image_url,content,status,userID,userName}){
+    async createBlog({title,slug,image_url,content,status,userID,userName,image_real_url}){
         try {
             return await this.databases.createDocument(config.appwriteDatabaseID,config.appwriteCollectionID,slug,
                 {
-                    title,content,image_url,status,userID,userName
+                    title,content,image_url,status,userID,userName,image_real_url,
                 }
             )
         } catch (error) {
@@ -77,11 +77,11 @@ export class DataService{
         }
     }
 
-    async updatBlog(slug,{title,image_url,content,status}){
+    async updatBlog(slug,{title,image_url,content,status,image_real_url}){
         try {
             return await this.databases.updateDocument(config.appwriteDatabaseID,config.appwriteCollectionID,slug,
                 {
-                    title,image_url,content,status
+                    title,image_url,content,status,image_real_url
                 }
             )
         } catch (error) {

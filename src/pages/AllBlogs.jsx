@@ -29,9 +29,14 @@ function AllBlogs() {
       if(response){
       const blogsWithImages = await Promise.all(
         response.documents.map(async (doc) => {
-          const image = await appwriteService.getFilePreview(doc.image_url)
-
-          const image_URL=image.replace("preview","view")
+          let image_URL=""
+          if(doc.image_url !='!'){
+            image_URL = await appwriteService.getFilePreview(doc.image_url)
+            image_URL=image_URL.replace("preview","view")
+          }
+          else{
+            image_URL=doc.image_real_url
+          }
           return {
             heading: doc.title,
             content: doc.content,

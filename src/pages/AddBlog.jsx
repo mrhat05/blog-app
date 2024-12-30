@@ -166,7 +166,7 @@ function AddBlogForm() {
           label="Upload Image"
           type="file"
           onChange={handlefileUpload}
-          accept=".jpg,.png,.gif"
+          accept=".jpg,.png,.gif,.jpeg"
           required
           className="file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white file:cursor-pointer hover:file:bg-blue-700"
         />

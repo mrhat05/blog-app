@@ -6,7 +6,7 @@ import appwriteService from '../appwrite/database_storage'
 import {useNavigate, useParams } from "react-router-dom";
 import {toast} from 'react-toastify'
 import CircularLoader from '../components/CircularLoader'
-
+import RTE from '../components/RTE'
 
 function EditBlog() {
   const {slug}=useParams()
@@ -164,7 +164,6 @@ function EditBlog() {
       console.log({heading,new_slug,content,img})
       return;
     }
-    console.log({noTitleChange,imageId,img})
     let newblogData;
     if(noTitleChange){
           if(file){
@@ -176,13 +175,22 @@ function EditBlog() {
               image_real_url:"!"
             }
           }
-          else{
+          else if(imageURL){
             newblogData = {
               title:heading,
               image_url:"!",
               content,
               status,
               image_real_url:img
+            }
+          }
+          else{
+            newblogData = {
+              title:heading,
+              image_url:img,
+              content,
+              status,
+              image_real_url:"!"
             }
           }
     }
@@ -198,9 +206,8 @@ function EditBlog() {
             userName:userData?.name || "guest",
             image_real_url:"!"
           };
-
         }
-        else{
+        else if(imageURL){
           newblogData = {
             title:heading,
             slug:new_slug,
@@ -210,6 +217,18 @@ function EditBlog() {
             userID:userData?.userID || "guest",
             userName:userData?.name || "guest",
             image_real_url:img
+          };
+        }
+        else{
+          newblogData = {
+            title:heading,
+            slug:new_slug,
+            image_url:img,
+            content,
+            status,
+            userID:userData?.userID || "guest",
+            userName:userData?.name || "guest",
+            image_real_url:"!"
           };
         }
     }
@@ -315,7 +334,7 @@ function EditBlog() {
             </span>
           </div>
 
-          <div className="relative">
+          {/* <div className="relative">
             <label
               className="inline-block text-sm font-medium text-gray-600 mb-3 pl-1"
               htmlFor="ta-1"
@@ -332,7 +351,13 @@ function EditBlog() {
             <span className="absolute right-2 bottom-2 text-sm text-gray-500">
               {content.length}/100000
             </span>
-          </div>
+          </div> */}
+
+          <RTE label={"Content"} value={content}
+            onChange={(newContent)=>{
+              setContent(newContent)
+            }} />
+          
 
           <div className="flex flex-col gap-6 items-center">
             <Select
@@ -346,7 +371,6 @@ function EditBlog() {
             {imageType === "Import Image from Device" ? (
               <div className="flex w-full justify-between">
                 <input
-                  required
                   type="file"
                   accept=".jpg,.png,.gif,.jpeg"
                   id="fileInput"
@@ -371,7 +395,6 @@ function EditBlog() {
               <Input
                 value={imageURL}
                 label="Image URL"
-                required
                 onChange={handleChangeInURL}
               ></Input>
             )}

@@ -66,7 +66,7 @@ const Login = () => {
           ):null
         }
         <form onSubmit={handleLogin} className="space-y-6">
-            <Input label={`Email`} placeholder='Enter your email' classNames='' onChange={(e) => setEmail(e.target.value)} required />
+            <Input label={`Email`} placeholder='Enter your email' classNames='' onChange={(e) => setEmail(e.target.value)} required autoComplete={"on"} />
 
 
             <div className="flex flex-col">

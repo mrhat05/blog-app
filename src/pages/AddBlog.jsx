@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import Button from "../components/Button";
@@ -7,7 +7,7 @@ import appwriteService from '../appwrite/database_storage'
 import {useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify'
 import CircularLoader from '../components/CircularLoader'
-
+import RTE from '../components/RTE'
 
 function AddBlogForm() {
   const userData=JSON.parse(localStorage.getItem("userData"));
@@ -24,7 +24,6 @@ function AddBlogForm() {
   const navigate =useNavigate()
   const [imageType,setImageType]=useState("Import Image from Device")
 
-
   useEffect(()=>{
     if(slug.length>36)setAllowUpload1(true)
     else setAllowUpload1(false)
@@ -35,11 +34,13 @@ function AddBlogForm() {
     else setAllowUpload2(false)
   },[content])
 
+
+
   const handleHeadingChange = (e) => {
     const value = e.target.value;
     setHeading(value);
-    setSlug(value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
-  };
+    setSlug(value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""))
+  }
 
   const handlefileUpload = (e) => {
     if(imageType==="Import Image from Device"){
@@ -183,24 +184,11 @@ function AddBlogForm() {
               {slug.length}/36
             </span>
           </div>
-
-          <div className="relative">
-            <label
-              className="inline-block text-sm font-medium text-gray-600 mb-3 pl-1"
-              htmlFor="ta-1"
-            >
-              Content
-            </label>
-            <textarea
-              onChange={(e) => setContent(e.target.value)}
-              id="ta-1"
-              className="w-full h-40 p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none overflow-y-auto text-gray-800"
-              placeholder="Type something..."
-            ></textarea>
-            <span className="absolute right-2 bottom-2 text-sm text-gray-500">
-              {content.length}/100000
-            </span>
-          </div>
+          
+          <RTE label={"Content"} value={content}
+            onChange={(newContent)=>{
+              setContent(newContent)
+            }} />
 
           <div className="flex flex-col gap-6 items-center ">
             <Select
@@ -254,10 +242,10 @@ function AddBlogForm() {
       </div>
     </div>
   )}
+{/* <ClearStorageButton>BUTTON</ClearStorageButton> */}
 </div>
 
   );
 }
 
 export default AddBlogForm;
-{/* <ClearStorageButton>BUTTON</ClearStorageButton> */}

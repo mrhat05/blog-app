@@ -3,7 +3,6 @@ import appwriteService from '../appwrite/database_storage';
 import BlogCard from '../components/BlogCard';
 function AllBlogs() {
 
-    // const userData = JSON.parse(localStorage.getItem("userData"));
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -47,9 +46,8 @@ function AllBlogs() {
         })
       );
       // const shuffledBlogsWithImages=await shuffleArray(blogsWithImages)
+      blogsWithImages.reverse()
       setBlogs(blogsWithImages);
-      // console.log(response)
-      // console.log(blogsWithImages)
     }
     } catch (err) {
       console.error("Error fetching blogs:", err);

@@ -99,7 +99,10 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
 
       <div className="border-l-4 pl-4 border-blue-500 mt-4">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">{blogTitle}</h1>
-        <p className="text-lg text-gray-700 break-words">{blogContent}</p>
+        <div  
+        dangerouslySetInnerHTML={{ __html: blogContent }}
+        className="text-lg text-gray-700 break-words">
+        </div>
       </div>
     </div>
     </div>

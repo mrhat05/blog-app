@@ -4,6 +4,7 @@ import appwriteService from '../appwrite/database_storage'
 import { useParams } from 'react-router-dom'
 
 function Blog() {
+  window.scrollTo({ top: 0, behavior: 'instant' });
   const {slug}=useParams()
   const[blogData,setBlogData]=useState(null)
   const [loader,setLoader]=useState(true)

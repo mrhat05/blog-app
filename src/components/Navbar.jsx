@@ -12,7 +12,7 @@ function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0); 
 
   const handleMenuClose = () => {
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); //
   };
 
   const Logout = async () => {

@@ -12,6 +12,7 @@ import Blog from './pages/Blog'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
+import Profile from './pages/Profile'
 
 function App(){
   return (
@@ -26,6 +27,7 @@ function App(){
           <Route path='/allBlogs' element={<Protected authentication={true}><AllBlogs/></Protected>}/>
           <Route path='/blog/:slug' element={<Protected authentication={true}><Blog/></Protected>}/>
           <Route path='/editBlog/:slug' element={<Protected authentication={true}><EditBlog/></Protected>}/>
+          <Route path='/profile' element={<Protected authentication={true}><Profile/></Protected>}/>
         </Route>
           <Route path='/signup' element={<Protected authentication={false}><Signin/></Protected>}/>
           <Route path='/login' element={<Protected authentication={false}><Login/></Protected>}/>

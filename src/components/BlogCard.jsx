@@ -6,7 +6,7 @@ function BlogCard({$id,title,image,keys,name,classnames,uploadTime,isActive,user
   const curr_userID = JSON.parse(localStorage.getItem("userData")).userID;
   return (
     <Link to={`/blog/${$id}`}>
-    <div key={keys} style={{backgroundColor:"F8F8F8"}} className={`h-82 p-4 shadow-md rounded-lg ${classnames}`}>
+    <div key={keys} className={`h-82 p-4 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)] rounded-lg ${classnames} `}>
 
         <div className='flex flex-col '>
           {userID===curr_userID&&(

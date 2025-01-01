@@ -67,7 +67,7 @@ const Home = () => {
     <div className={`${blogs.length>0 ? "mb-48":""}`}>
       <header className="py-10 bg-white shadow-md text-center">
         <h2 className="text-3xl font-bold text-blue-600">
-          {`Welcome Back ${userData ? `${userData.name}` : ""}`}
+          {`Dashboard`}
         </h2>
         <p className="text-gray-600 mt-2">Here are the blogs you've uploaded.</p>
       </header>

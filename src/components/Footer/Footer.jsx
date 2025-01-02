@@ -48,7 +48,7 @@ function Footer() {
               <h3 className="font-semibold mb-4 text-lg">Support</h3>
               <ul>
                 <li className="mb-2">
-                  <Link to="/account" className="hover:text-gray-200">
+                  <Link to="/profile" className="hover:text-gray-200">
                     Account
                   </Link>
                 </li>

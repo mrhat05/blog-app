@@ -5,7 +5,6 @@ import Input from "../components/Input";
 
 function ProfilePage() {
   window.scrollTo({ top: 0, behavior: 'instant' });
-
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [profilePhotoURL, setProfilePhotoURL] = useState("");
   const [profileImageID, setProfileImageID] = useState("");

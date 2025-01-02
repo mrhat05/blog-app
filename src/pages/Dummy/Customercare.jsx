@@ -1,0 +1,13 @@
+import React from "react";
+
+const CustomerSupport = () => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    return (
+        <div className="p-8 bg-gray-100 min-h-screen">
+            <h1 className="text-4xl font-bold mb-4">Customer Support</h1>
+            <p className="text-lg text-gray-700">We are here to help you 24/7. Reach out via email or call our hotline.</p>
+        </div>
+    );
+};
+
+export default CustomerSupport;

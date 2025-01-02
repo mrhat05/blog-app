@@ -13,6 +13,17 @@ import './App.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
 import Profile from './pages/Profile'
+//dummy
+import Company from './pages/dummy/Company';
+import Features from './pages/dummy/Feautures';
+import Pricing from './pages/dummy/Pricing';
+import AffiliateProgram from './pages/dummy/Affliate';
+import PressKit from './pages/dummy/PressKit';
+import Support from './pages/dummy/Support';
+import Help from './pages/dummy/Help';
+import ContactUs from './pages/dummy/ContactUs';
+import CustomerSupport from './pages/dummy/Customercare';
+
 
 function App(){
   return (
@@ -28,6 +39,42 @@ function App(){
           <Route path='/blog/:slug' element={<Protected authentication={true}><Blog/></Protected>}/>
           <Route path='/editBlog/:slug' element={<Protected authentication={true}><EditBlog/></Protected>}/>
           <Route path='/profile' element={<Protected authentication={true}><Profile/></Protected>}/>
+          <Route
+                    path='/company'
+                    element={<Protected authentication={true}><Company /></Protected>}
+                />
+                <Route
+                    path='/features'
+                    element={<Protected authentication={true}><Features /></Protected>}
+                />
+                <Route
+                    path='/pricing'
+                    element={<Protected authentication={true}><Pricing /></Protected>}
+                />
+                <Route
+                    path='/affiliate'
+                    element={<Protected authentication={true}><AffiliateProgram /></Protected>}
+                />
+                <Route
+                    path='/press'
+                    element={<Protected authentication={true}><PressKit /></Protected>}
+                />
+                <Route
+                    path='/support'
+                    element={<Protected authentication={true}><Support /></Protected>}
+                />
+                <Route
+                    path='/help'
+                    element={<Protected authentication={true}><Help /></Protected>}
+                />
+                <Route
+                    path='/contact-us'
+                    element={<Protected authentication={true}><ContactUs /></Protected>}
+                />
+                <Route
+                    path='/customer-support'
+                    element={<Protected authentication={true}><CustomerSupport /></Protected>}
+                />
         </Route>
           <Route path='/signup' element={<Protected authentication={false}><Signin/></Protected>}/>
           <Route path='/login' element={<Protected authentication={false}><Login/></Protected>}/>

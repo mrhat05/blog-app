@@ -14,15 +14,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
 import Profile from './pages/Profile'
 //dummy
-import Company from './pages/dummy/Company';
-import Features from './pages/dummy/Feautures';
-import Pricing from './pages/dummy/Pricing';
-import AffiliateProgram from './pages/dummy/Affliate';
-import PressKit from './pages/dummy/PressKit';
-import Support from './pages/dummy/Support';
-import Help from './pages/dummy/Help';
-import ContactUs from './pages/dummy/ContactUs';
-import CustomerSupport from './pages/dummy/Customercare';
+import Company from './pages/Dummy/Company';
+import Features from './pages/Dummy/Feautures';
+import Pricing from './pages/Dummy/Pricing';
+import AffiliateProgram from './pages/Dummy/Affliate';
+import PressKit from './pages/Dummy/PressKit';
+import Support from './pages/Dummy/Support';
+import Help from './pages/Dummy/Help';
+import ContactUs from './pages/Dummy/ContactUs';
+import CustomerSupport from './pages/Dummy/Customercare';
 
 
 function App(){

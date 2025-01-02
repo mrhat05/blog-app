@@ -18,10 +18,10 @@ import Company from './pages/Dummy/Company';
 import Features from './pages/Dummy/Feautures';
 import Pricing from './pages/Dummy/Pricing';
 import AffiliateProgram from './pages/Dummy/Affliate';
-import PressKit from './pages/Dummy/PressKit';
+import PressKit from './pages/Dummy/Presskit';
 import Support from './pages/Dummy/Support';
 import Help from './pages/Dummy/Help';
-import ContactUs from './pages/Dummy/ContactUs';
+import ContactUs from './pages/Dummy/Contactus';
 import CustomerSupport from './pages/Dummy/Customercare';
 
 

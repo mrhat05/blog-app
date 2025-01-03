@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import appwriteService from '../appwrite/database_storage';
 import BlogCard from '../components/BlogCard';
+import { useSelector } from 'react-redux';
+
 function AllBlogs() {
 
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
 
     function makeSlug(title){
       return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
@@ -63,13 +66,14 @@ function AllBlogs() {
   // };
   
   return (
+    <div className='overflow-hidden'>
     <div className='mb-48'>
     {loading ? (
       <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {Array.from({ length: 6 }).map((_, index) => (
         <div
         key={index}
-        className="h-80 bg-gray-200 animate-pulse rounded-md"
+        className={`h-80 ${isDarkMode?"bg-darkBoxColor":"bg-gray-200"} animate-pulse rounded-md`}
         ></div>
       ))}
       </section>
@@ -91,6 +95,7 @@ function AllBlogs() {
           </p>
         </div>
     )}
+  </div>
   </div>
   )
 }

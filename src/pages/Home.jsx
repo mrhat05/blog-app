@@ -3,12 +3,15 @@ import appwriteService from '../appwrite/database_storage';
 import BlogCard from '../components/BlogCard';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 const Home = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
   
   function makeSlug(title){
     return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
@@ -64,8 +67,9 @@ const Home = () => {
   };
 
   return (
-    <div className={`${blogs.length>0 ? "mb-48":""}`}>
-      <header className="py-10 bg-white shadow-md text-center">
+    <div className='overflow-hidden'>
+    <div className={`${isDarkMode?"bg-black":"bg-white"} ${blogs.length>0 ? "mb-48 ":""}`}>
+      <header className={`py-10 ${isDarkMode?"bg-soft-black rounded-lg shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800 ":"bg-white shadow-md"} text-center m-4`}>
         <h2 className="text-3xl font-bold text-blue-600">
           {`Dashboard`}
         </h2>
@@ -77,12 +81,12 @@ const Home = () => {
             {Array.from({ length: 6 }).map((_, index) => (
               <div
               key={index}
-              className="h-80 bg-gray-200 animate-pulse rounded-md"
+              className={`h-80 ${isDarkMode?"bg-darkBoxColor":"bg-gray-200"} animate-pulse rounded-md`}
               ></div>
             ))}
           </section>
         ) : error ? (
-          <div className='min-h-screen mt-10 flex justify-center'>
+          <div className='min-h-screen mt-10 flex justify-center '>
             <p className="text-red-600 text-xl col-span-full">
               {error}
             </p>
@@ -108,6 +112,7 @@ const Home = () => {
           </div>
         )}
         </div>
+    </div>
     </div>
   );
 };

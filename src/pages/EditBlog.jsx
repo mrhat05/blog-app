@@ -7,6 +7,7 @@ import {useNavigate, useParams } from "react-router-dom";
 import {toast} from 'react-toastify'
 import CircularLoader from '../components/CircularLoader'
 import RTE from '../components/RTE'
+import { useSelector } from "react-redux";
 
 function EditBlog() {
   const {slug}=useParams()
@@ -29,6 +30,7 @@ function EditBlog() {
   const [imageType,setImageType]=useState("Import Image from Device")
   const [fileName, setFileName] = useState("No file Chosen");
   const navigate =useNavigate()
+  const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
 
 
   const truncateFileName = (name) => {
@@ -287,8 +289,8 @@ function EditBlog() {
       <CircularLoader />
     </div>
   ) : (
-    <div>
-      <div className="max-w-xl mb-52 mx-auto p-6 bg-white shadow-md rounded-lg my-5 mt-10">
+    <div className="overflow-hidden">
+      <div className={`max-w-xl mb-52 mx-auto p-6 ${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800 ":"bg-white shadow-lg"} rounded-lg my-5 mt-10`}>
         {error && (
           <div className="flex p-2">
             <h2 className="text-red-600 text-sm">{error}</h2>
@@ -314,7 +316,6 @@ function EditBlog() {
               value={heading}
               onChange={handleHeadingChange}
               required
-              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-lg h-8"
             />
             <span className="absolute right-2 top-2 text-sm text-gray-500">
               {heading.length}
@@ -327,31 +328,11 @@ function EditBlog() {
               type="text"
               value={new_slug}
               readOnly
-              className="w-full h-8 bg-gray-100 outline-none rounded-lg"
             />
             <span className="absolute right-2 top-2 text-sm text-gray-500">
               {new_slug.length}/36
             </span>
           </div>
-
-          {/* <div className="relative">
-            <label
-              className="inline-block text-sm font-medium text-gray-600 mb-3 pl-1"
-              htmlFor="ta-1"
-            >
-              Content
-            </label>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              id="ta-1"
-              className="w-full h-40 p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none overflow-y-auto text-gray-800"
-              placeholder="Type something..."
-            ></textarea>
-            <span className="absolute right-2 bottom-2 text-sm text-gray-500">
-              {content.length}/100000
-            </span>
-          </div> */}
 
           <RTE label={"Content"} value={content}
             onChange={(newContent)=>{

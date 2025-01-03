@@ -201,11 +201,11 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedSwitches() {
+export default function CustomizedSwitches({checked}) {
   return (
     <FormGroup>
       <FormControlLabel
-        control={<MaterialUISwitch defaultChecked />}
+        control={<MaterialUISwitch checked={checked}/>}
       />
     </FormGroup>
   );

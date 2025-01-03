@@ -35,7 +35,6 @@ function App(){
   useEffect(() => {
     if (savedDarkMode === "true") {
       dispatch(setDarkMode(true));
-      console.log("yes")
     } else if (savedDarkMode === "false") {
         dispatch(setDarkMode(false));
       console.log("no")

@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import authService from "../appwrite/auth";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
-import { toggleDarkMode } from '../store/darkModeSlice';
-import SliderSwitch from '../components/SliderSwitch'
+import { toggleDarkMode } from "../store/darkModeSlice";
+import SliderSwitch from "../components/SliderSwitch";
 
 function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0); 
+  const [lastScrollY, setLastScrollY] = useState(0);
   const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
 
   const handleMenuClose = () => {
-    setIsMenuOpen(false);//
+    setIsMenuOpen(false);
   };
 
   const Logout = async () => {
@@ -31,10 +31,9 @@ function Navbar() {
     if (window.scrollY < lastScrollY) {
       setShowNavbar(true);
     } else {
-
       setShowNavbar(false);
     }
-    setLastScrollY(window.scrollY); 
+    setLastScrollY(window.scrollY);
   };
 
   useEffect(() => {
@@ -46,39 +45,61 @@ function Navbar() {
 
   return (
     <nav
-      className={` text-white shadow-xl transition-all duration-300 ease-in-out ${
+      className={`text-white shadow-xl transition-all duration-300 ease-in-out ${
         showNavbar ? "top-0" : "-top-20"
-      } fixed w-full z-50 dark:text-white ${isDarkMode ? 'bg-radial-dark' : 'bg-gradient-to-r from-teal-500 via-blue-500 to-purple-600'} `}
+      } fixed w-full z-50 dark:text-white ${
+        isDarkMode
+          ? "bg-radial-dark"
+          : "bg-gradient-to-r from-teal-500 via-blue-500 to-purple-600"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 lg:px-6 ">
-        <div className="flex justify-start gap-5 lg:justify-between items-center h-20">
-          <button
-            className="text-3xl lg:hidden focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+        <div className="flex justify-between items-center h-20">
+          {/* Hamburger & Logo */}
+          <div className="flex items-center">
+            <button
+              className="text-3xl lg:hidden focus:outline-none mr-4"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              ☰
+            </button>
+            <NavLink to="/home" className="text-xl font-bold">
+              Blogify
+            </NavLink>
+          </div>
+
+      
+            <div
+            onClick={() => {
+              if (isDarkMode) localStorage.setItem("darkMode", "false");
+              else localStorage.setItem("darkMode", "true");
+              dispatch(toggleDarkMode());
+            }}
+            className="lg:hidden"
           >
-            ☰
-          </button>
-
-          <NavLink to="/home" className="text-xl font-bold">
-            Blogify
-          </NavLink>
-
+            <SliderSwitch checked={isDarkMode} />
+          </div>
           <div
             className={`${
-              isMenuOpen ? "block shadow-lg" : "hidden"
-            } absolute top-20 left-4 w-3/4 lg:w-auto bg-white text-black lg:static lg:bg-transparent lg:flex lg:items-center lg:space-x-6 z-50 `}
+              isMenuOpen ? "block" : "hidden"
+            } absolute lg:relative lg:flex lg:items-center lg:space-x-6 lg:bg-transparent ${
+              isDarkMode ? "bg-darkNavBgColor text-white" : "bg-white text-black"
+            } w-3/4 lg:w-auto top-20 left-4 lg:top-0 p-4 lg:p-0 shadow-lg lg:shadow-none rounded-lg m-2`}
           >
-      <div
-        onClick={() =>{
-          if(isDarkMode)localStorage.setItem("darkMode","false")
-            else localStorage.setItem("darkMode","true")
-          dispatch(toggleDarkMode())
-        }}
-        className="text-white flex justify-center items-center"
-      >
-        <SliderSwitch />
-      </div>
-            <NavLink
+
+          { !isMenuOpen &&(
+            <div
+            onClick={() => {
+              if (isDarkMode) localStorage.setItem("darkMode", "false");
+              else localStorage.setItem("darkMode", "true");
+              dispatch(toggleDarkMode());
+            }}
+            className=""
+          >
+            <SliderSwitch checked={isDarkMode} />
+          </div>)
+          }
+ <NavLink
               to="/home"
               className={({ isActive }) =>
                 isActive
@@ -138,4 +159,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Navbar

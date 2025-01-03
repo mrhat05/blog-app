@@ -18,7 +18,8 @@ const Login = () => {
   const id1=useId()
   const [showPassword,setShowPassword]=useState(false)
   const navigate=useNavigate()
-
+  const darkModeAns=localStorage.getItem("darkMode")
+  const isDarkMode=darkModeAns?darkModeAns==="true":true
   const handleShowPassword=(e)=>{
     e.preventDefault()
     setShowPassword(!showPassword)
@@ -50,14 +51,14 @@ const Login = () => {
     }
   }
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className={`flex items-center justify-center min-h-screen ${isDarkMode?"bg-black":"bg-gray-100"}`}>
       {loader?
         (
           <CircularLoader/>
         )
         :(
-      <div className="w-full max-w-md p-8 space-y-4 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-800">
+      <div className={`w-full max-w-md p-8 space-y-4 ${isDarkMode?"bg-radial-dark  shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800":"bg-white shadow-lg"}  rounded-lg`}>
+        <h2 className={`text-2xl font-bold text-center ${isDarkMode?"text-darkPrimaryTextColor":"text-gray-800"}`}>
           Login to Your Account
         </h2>
         {
@@ -70,18 +71,18 @@ const Login = () => {
 
 
             <div className="flex flex-col">
-              <label htmlFor={id1} className='inline-block text-sm font-medium text-gray-600 mb-3 pl-1'>Password</label>
-              <div className="relative w-full focus-within:ring-2 focus-within:ring-blue-500 rounded-lg">
+              <label htmlFor={id1} className={`inline-block text-sm font-medium ${isDarkMode?"text-darkSecondaryTextColor":"text-gray-600"} mb-3 pl-1`}>Password</label>
+              <div className={`relative w-full focus-within:ring-2 ${isDarkMode?"focus-within:ring-white":"focus-within:ring-blue-500"} rounded-lg`}>
                 <input
                   type={showPassword?"text":"password"}
-                  className="px-3 py-2  focus:outline-none rounded-tl-lg rounded-bl-lg bg-white text-black focus:bg-gray-50 duration-200 border border-gray-200 w-11/12"
+                  className={`px-3 py-2  focus:outline-none rounded-tl-lg rounded-bl-lg ${isDarkMode?"bg-darkButtonsTextColor text-white":"bg-white text-black"}  duration-200  w-11/12`}
                   id={id1}
                   placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} required
                 />
-                <button type="button"
-                  className="w-1/12 border-r border-t border-b border-gray-200 px-2 py-2 rounded-tr-lg rounded-br-lg absolute right-0 top-0 h-full flex justify-center items-center"
+                <button onClick={handleShowPassword} type="button"
+                  className={`w-1/12 border-r border-t border-b border-gray-200 px-2 py-2 bg-white rounded-tr-lg rounded-br-lg absolute right-0 top-0 h-full flex justify-center items-center`}
                 >
-                  <FontAwesomeIcon onClick={handleShowPassword} icon={showPassword?faEye:faEyeSlash} />
+                  <FontAwesomeIcon icon={showPassword?faEye:faEyeSlash} />
                 </button>
               </div>
 

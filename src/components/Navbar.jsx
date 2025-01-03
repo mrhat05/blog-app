@@ -145,13 +145,9 @@ function Navbar() {
             >
               Profile
             </NavLink>
-
-            <button
-              onClick={Logout}
-              className="block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-black hover:bg-gray-200 p-3 rounded-md lg:text-white lg:hover:bg-opacity-80"
-            >
+            <NavLink onClick={Logout} className="block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-black hover:bg-gray-200 p-3 rounded-md lg:text-white lg:hover:bg-opacity-80">
               Logout
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>

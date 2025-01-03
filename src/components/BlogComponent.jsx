@@ -4,6 +4,7 @@ import DialogBox from './DialogueBox';
 import { useNavigate } from 'react-router-dom'
 import appwriteService from '../appwrite/database_storage'
 import {toast} from 'react-toastify'
+import { useSelector } from 'react-redux';
 
 function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogImage,userID,slug,imageID,isActive}) {
 
@@ -11,6 +12,7 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
     const userData = JSON.parse(localStorage.getItem("userData"));
     const uploadDate=uploadTime.split('T')[0]
     const [isOpen,setIsOpen]=useState(false)
+    const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
     
     const handleDelete=async()=>{
         try {
@@ -47,7 +49,8 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
     }
 
   return (
-    <div className={`bg-white shadow-lg rounded-lg max-w-3xl mx-auto p-4 sm:p-6 my-4 `}>
+    
+    <div className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-900  ":"bg-white shadow-lg"}  rounded-lg max-w-3xl mx-auto p-4 sm:p-6 my-4 `}>
         { isOpen && (
             <DialogBox isOpen={true}   options ={ [
                 { label: "Yes", action: () =>{
@@ -60,7 +63,6 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-
             <div className='flex flex-col gap-4'>
                 {userID===userData.userID &&(
                 <div className="flex items-center space-x-2">
@@ -80,7 +82,7 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
                 <h2 className="text-xl font-semibold text-blue-500">{uploaderName}</h2>
             </div>
 
-            <p className="text-sm text-gray-600">Posted on: <span className="font-medium">{uploadDate}</span></p>
+            <p className={`text-sm ${isDarkMode?"text-darkSecondaryTextColor":"text-gray-600"}`}>Posted on: <span className={`${isDarkMode?"text-darkSecondaryTextColor":"text-gray-600"} font-medium`}>{uploadDate}</span></p>
         </div>
         {(userID===userData.userID)&&(
         <div className='flex align-middle gap-4'>
@@ -98,10 +100,10 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
       </div>
 
       <div className="border-l-4 pl-4 border-blue-500 mt-4">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">{blogTitle}</h1>
+        <h1 className={`text-3xl font-bold ${isDarkMode?"text-darkPrimaryTextColor":"text-gray-800"} mb-4`}>{blogTitle}</h1>
         <div  
         dangerouslySetInnerHTML={{ __html: blogContent }}
-        className="text-lg text-gray-700 break-words">
+        className={`text-lg ${isDarkMode?"text-darkPrimaryTextColor":"text-gray-700"} break-words`}>
         </div>
       </div>
     </div>

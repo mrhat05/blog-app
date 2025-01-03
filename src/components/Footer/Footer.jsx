@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-
+import { useSelector } from 'react-redux';
 
 function Footer() {
+  const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
   return (
-    <footer className="bg-gradient-to-r from-teal-500 via-blue-500 to-purple-600 bg-opacity-50 text-white py-10">
+    <footer className={`${isDarkMode?"bg-radial-dark":"bg-gradient-to-r from-teal-500 via-blue-500 to-purple-600"}  text-white py-10`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between items-start">
           

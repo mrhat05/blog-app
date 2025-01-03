@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import appwriteService from '../appwrite/dp_database_storage';
 import CircularLoader from '../components/CircularLoader';
 import Input from "../components/Input";
+import { useSelector } from "react-redux";
 
 function ProfilePage() {
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -13,6 +14,7 @@ function ProfilePage() {
   const [removing, setRemoving] = useState(false);
   const userData = JSON.parse(localStorage.getItem("userData"));
   const { name, email, userID } = userData;
+  const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
 
   useEffect(() => {
     fetchProfilePhoto();
@@ -80,7 +82,7 @@ function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className={`min-h-screen ${isDarkMode?"bg-darkBgColor":"bg-gray-100"} flex items-center justify-center`}>
       {loader ? (
         uploading ? (
           <div className="flex flex-col items-center gap-3">
@@ -96,7 +98,7 @@ function ProfilePage() {
             <CircularLoader />
         )
       ) :(
-        <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+        <div className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800 ":"bg-white shadow-lg"}  rounded-lg p-8 max-w-sm w-full`}>
           <div className="flex flex-col items-center gap-5">
             {profilePhoto || profilePhotoURL ? (
               <img
@@ -105,8 +107,8 @@ function ProfilePage() {
                 className="w-32 h-32 rounded-full object-cover shadow-md"
               />
             ) : (
-              <div className="w-32 h-32 rounded-full bg-gray-300 bg-opacity-50 flex items-center justify-center shadow-md">
-                <span className="text-gray-500 text-sm">No Photo</span>
+              <div className={`w-32 h-32 rounded-full bg-gray-300 ${isDarkMode?"bg-opacity-30":"bg-opacity-50"} flex items-center justify-center shadow-md`}>
+                <span className={`${isDarkMode?"":"text-gray-500"} text-sm`}>No Photo</span>
               </div>
             )}
 
@@ -139,19 +141,9 @@ function ProfilePage() {
             </div>
           </div>
 
-          <div className="mt-8">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Name
-              </label>
-              <div className="bg-gray-100 p-3 rounded-md">{name}</div>
-            </div>
-            <div>
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Email
-              </label>
-              <div className="bg-gray-100 p-3 rounded-md">{email}</div>
-            </div>
+          <div className="mt-8 flex flex-col gap-3">
+              <Input value={name} readOnly label={"Name"}/>
+              <Input value={email} readOnly label={"Email"} />
           </div>
         </div>
       )}

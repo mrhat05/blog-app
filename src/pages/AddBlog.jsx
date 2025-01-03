@@ -8,6 +8,7 @@ import {useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify'
 import CircularLoader from '../components/CircularLoader'
 import RTE from '../components/RTE'
+import { useSelector } from "react-redux";
 
 function AddBlogForm() {
   const userData=JSON.parse(localStorage.getItem("userData"));
@@ -23,6 +24,7 @@ function AddBlogForm() {
   const [error,setError]=useState("")
   const navigate =useNavigate()
   const [imageType,setImageType]=useState("Import Image from Device")
+  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
 
   useEffect(()=>{
     if(slug.length>36)setAllowUpload1(true)
@@ -131,21 +133,23 @@ function AddBlogForm() {
   }
 
   return (
-<div>
+<div className={`overflow-hidden`}>
+  <div>
   {loader ? (
-    <div className="flex items-center flex-col m-10 min-h-screen">
+    <div className="flex items-center flex-col m-10 min-h-screen ">
       <h2 className="text-xl text-gray-400 m-10">Uploading the blog....</h2>
       <CircularLoader />
     </div>
   ) : (
-    <div>
-      <div className="max-w-xl mb-52 mx-auto p-6 bg-white shadow-md rounded-lg my-5 mt-10">
+    <div className={`${isDarkMode?"bg-darkBgColor":"bg-white"}`}>
+      <div className={`max-w-xl mb-52 mx-auto shadow-md rounded-lg my-5 mt-10  `}>
         {error && (
           <div className="flex p-2">
             <h2 className="text-red-600 text-sm">{error}</h2>
           </div>
         )}
-        <h2 className="text-2xl font-semibold text-blue-700 mb-6">Add Blog</h2>
+        <div className={`p-5 rounded-lg ${isDarkMode?"bg-darkBoxColor   shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800":"bg-gray-50 border border-gray-200"} shadow-lg`}>
+        <h2 className={`text-2xl font-semibold text-blue-600 mb-6`}>Add Blog</h2>
         <form
           onSubmit={
             allowUpload1 || allowUpload2
@@ -159,13 +163,11 @@ function AddBlogForm() {
           className="space-y-4"
         >
           <div className="relative">
-            <Input
-              label="Heading"
-              type="text"
-              value={heading}
-              onChange={handleHeadingChange}
-              required
-              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-lg h-8"
+            <Input 
+            label={"Title"} 
+            value={heading}
+            onChange={handleHeadingChange}
+            required
             />
             <span className="absolute right-2 top-2 text-sm text-gray-500">
               {heading.length}
@@ -178,7 +180,6 @@ function AddBlogForm() {
               type="text"
               value={slug}
               readOnly
-              className="w-full h-8 bg-gray-100 outline-none rounded-lg"
             />
             <span className="absolute right-2 top-2 text-sm text-gray-500">
               {slug.length}/36
@@ -213,7 +214,7 @@ function AddBlogForm() {
                 label="Image URL"
                 required
                 onChange={handlefileUpload}
-              ></Input>
+              />
             )}
           </div>
 
@@ -239,10 +240,11 @@ function AddBlogForm() {
             Submit
           </Button>
         </form>
+        </div>
       </div>
-    </div>
+      </div>
   )}
-{/* <ClearStorageButton>BUTTON</ClearStorageButton> */}
+  </div>
 </div>
 
   );

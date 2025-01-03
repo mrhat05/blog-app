@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route,Navigate } from 'react-router-dom'
 import Home from './pages/Home';
 import Layout from './pages/Layout';
@@ -13,6 +13,8 @@ import './App.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
 import Profile from './pages/Profile'
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleDarkMode, setDarkMode } from './store/darkModeSlice';
 //dummy
 import Company from './pages/Dummy/Company';
 import Features from './pages/Dummy/Feautures';
@@ -26,12 +28,37 @@ import CustomerSupport from './pages/Dummy/Customercare';
 
 
 function App(){
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
+  const savedDarkMode = localStorage.getItem('darkMode');
+
+  useEffect(() => {
+    if (savedDarkMode === "true") {
+      dispatch(setDarkMode(true));
+      console.log("yes")
+    } else if (savedDarkMode === "false") {
+        dispatch(setDarkMode(false));
+      console.log("no")
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (savedDarkMode?(savedDarkMode==="true" || isDarkMode):(savedDarkMode==="false" ||isDarkMode) ){
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
+    }
+  }, [isDarkMode]);
+
   return (
+    <div>
+
       <Router>
         <ToastContainer/>
         <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
-
           <Route path='/' element={<Protected authentication={true}><Layout/></Protected>}>
           <Route path='/home' element={<Protected authentication={true}><Home/></Protected>}/>
           <Route path='/addBlog' element={<Protected authentication={true}><AddBlog/></Protected>}/>
@@ -80,6 +107,7 @@ function App(){
           <Route path='/login' element={<Protected authentication={false}><Login/></Protected>}/>
         </Routes>
       </Router>
+      </div>
   )
 }
 

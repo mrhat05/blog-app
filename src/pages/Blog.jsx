@@ -67,8 +67,10 @@ function Blog() {
         ):!blogData?(
           <div className='min-h-screen text-xl flex justify-center m-10'>Blog not found.</div>
         ):(
+          <div className='overflow-hidden'>
           <div className='mb-52 mt-10'>
             <BlogComponent uploaderName={blogData.userName} uploadTime={blogData.createdAt} blogTitle={blogData.title} blogContent={blogData.content} blogImage={blogData.image_url} userID={blogData.userID} slug={slug} imageID={blogData.imageID} isActive={blogData.status}  />
+          </div>
           </div>
         )
       }

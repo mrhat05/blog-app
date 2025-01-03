@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import appwriteService from '../appwrite/database_storage.js'
+import { useSelector } from 'react-redux';
+
 function BlogCard({$id,title,image,keys,name,classnames,uploadTime,isActive,userID}) {
   const uploadDate=uploadTime.split('T')[0]
   const curr_userID = JSON.parse(localStorage.getItem("userData")).userID;
+  const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
+
   return (
     <Link to={`/blog/${$id}`}>
-    <div key={keys} className={`h-82 p-4 shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)] rounded-lg ${classnames} `}>
+    <div key={keys} className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800  ":" shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-82 p-4  rounded-lg ${classnames} `}>
 
         <div className='flex flex-col '>
           {userID===curr_userID&&(
@@ -32,9 +35,9 @@ function BlogCard({$id,title,image,keys,name,classnames,uploadTime,isActive,user
           alt={title}
           className="w-full h-40 object-cover rounded-t-lg"
           />
-          <h3 className="text-xl font-semibold mt-2 min-h-16">{title}</h3>
+          <h3 className={`${isDarkMode?"text-darkPrimaryTextColor":""} text-xl font-semibold mt-2 min-h-16`}>{title}</h3>
 
-          <p className="text-sm text-gray-600">Posted on: <span className="font-medium">{uploadDate}</span></p>
+          <p className={`${isDarkMode?"text-darkSecondaryTextColor":"text-gray-600"} text-sm`}>Posted on: <span className="font-medium">{uploadDate}</span></p>
     </div>
   </Link>
   )

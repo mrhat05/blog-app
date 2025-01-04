@@ -69,7 +69,7 @@ const Home = () => {
   return (
     <div className='overflow-hidden'>
     <div className={`${isDarkMode?"bg-black":"bg-white"} ${blogs.length>0 ? "mb-48 ":""}`}>
-      <header className={`py-10 ${isDarkMode?"bg-soft-black rounded-lg shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800 ":"bg-white shadow-md"} text-center m-4`}>
+      <header className={`py-10 ${isDarkMode?"bg-soft-black rounded-lg shadow-[0px_0px_30px_6px_rgba(0,0,0,0.05)] shadow-blue-800":"bg-white shadow-md"} text-center m-4`}>
         <h2 className="text-3xl font-bold text-blue-600">
           {`Dashboard`}
         </h2>

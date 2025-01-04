@@ -99,7 +99,7 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
         )}
       </div>
 
-      <div className="border-l-4 pl-4 border-blue-500 mt-4">
+      <div className={`${isDarkMode?"":"border-l-4 border-blue-500 "} pl-4 mt-4`}>
         <h1 className={`text-3xl font-bold ${isDarkMode?"text-darkPrimaryTextColor":"text-gray-800"} mb-4`}>{blogTitle}</h1>
         <div  
         dangerouslySetInnerHTML={{ __html: blogContent }}

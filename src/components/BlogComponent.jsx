@@ -50,7 +50,7 @@ function BlogComponent({ uploaderName, uploadTime, blogTitle, blogContent, blogI
 
   return (
     
-    <div className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-900  ":"bg-white shadow-lg"}  rounded-lg max-w-3xl mx-auto p-4 sm:p-6 my-4 `}>
+    <div className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800  ":"bg-white shadow-lg"}  rounded-lg max-w-3xl mx-auto p-4 sm:p-6 my-4 `}>
         { isOpen && (
             <DialogBox isOpen={true}   options ={ [
                 { label: "Yes", action: () =>{

@@ -148,7 +148,7 @@ function AddBlogForm() {
             <h2 className="text-red-600 text-sm">{error}</h2>
           </div>
         )}
-        <div className={`p-5 rounded-lg ${isDarkMode?"bg-darkBoxColor   shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800":"bg-gray-50 border border-gray-200"} shadow-lg`}>
+        <div className={`p-5 rounded-lg ${isDarkMode?"bg-darkBoxColor   shadow-[0px_0px_8px_2px_rgba(0,0,0,0.05)] shadow-blue-800":"bg-gray-50 border border-gray-200"} shadow-lg`}>
         <h2 className={`text-2xl font-semibold text-blue-600 mb-6`}>Add Blog</h2>
         <form
           onSubmit={

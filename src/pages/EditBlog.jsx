@@ -290,7 +290,7 @@ function EditBlog() {
     </div>
   ) : (
     <div className="overflow-hidden">
-      <div className={`max-w-xl mb-52 mx-auto p-6 ${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_30px_6px_rgba(0,0,0,0.05)] shadow-blue-800 shadow-blue-800 ":"bg-white shadow-lg"} rounded-lg my-5 mt-10`}>
+      <div className={`max-w-xl mb-52 mx-auto p-6 ${isDarkMode?"bg-darkBoxColor ":"bg-white shadow-lg"} rounded-lg my-5 mt-10`}>
         {error && (
           <div className="flex p-2">
             <h2 className="text-red-600 text-sm">{error}</h2>

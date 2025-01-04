@@ -9,7 +9,7 @@ function BlogCard({$id,title,image,keys,name,classnames,uploadTime,isActive,user
 
   return (
     <Link to={`/blog/${$id}`}>
-    <div key={keys} className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800  ":" shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-82 p-4  rounded-lg ${classnames} `}>
+    <div key={keys} className={`${isDarkMode?"bg-darkBoxColor ":" shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-82 p-4  rounded-lg ${classnames} `}>
 
         <div className='flex flex-col '>
           {userID===curr_userID&&(

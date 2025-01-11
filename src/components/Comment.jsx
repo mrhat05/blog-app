@@ -96,14 +96,17 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
             onClick={(e) => e.stopPropagation()}
             variants={modalVariants}
           >
-            <div className="w-full bg-gray-300 rounded-lg ">
+            <div className="w-full bg-gray-300 rounded-lg">
               <Link to={`/blog/${slug}`}>
-                <div className="relative w-full h-full">
-                  <img
-                    src={blogImg}
-                    alt="Post"
-                    className="w-full h-full object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-t-none"
-                  />
+                <div className="relative w-full">
+                <img
+              src={blogImg}
+              alt="Post"
+              className="w-full h-[30vh] sm:h-[70vh]  object-cover object-center rounded-t-lg sm:rounded-l-lg sm:rounded-t-none"
+            />
+
+
+
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white p-3 rounded-md max-w-full">
                     <h2
                       className="text-lg font-bold text-center truncate"
@@ -113,7 +116,7 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
                         textOverflow: "ellipsis",
                       }}
                     >
-                      {blogTitle}
+                      {blogTitle}jjoj
                     </h2>
                   </div>
                 </div>
@@ -121,7 +124,7 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
 
               <button
                 style={{ color: "white" }}
-                className="text-lg font-bold absolute block sm:hidden top-0 left-0 bg-darkBgColor p-1"
+                className="text-lg font-bold absolute block sm:hidden top-0 left-0 bg-darkBgColor p-1 w-10"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowModal(false);
@@ -134,7 +137,7 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
 
             {/* Comments Section */}
             <div className="w-full flex flex-col p-6">
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-4 ">
                 <h2 className="text-lg font-bold">Comments</h2>
                 <button
                   className="text-lg font-bold hidden sm:block"

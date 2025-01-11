@@ -98,7 +98,7 @@ function ProfilePage() {
             <CircularLoader />
         )
       ) :(
-        <div className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_10px_1px_rgba(0,0,0,0.05)] shadow-blue-800 ":"bg-white shadow-lg"}  rounded-lg p-8 max-w-sm w-full`}>
+        <div className={`${isDarkMode?"bg-darkBoxColor shadow-[0px_0px_30px_6px_rgba(0,0,0,0.05)] shadow-blue-800 ":"bg-white shadow-lg"}  rounded-lg p-8 max-w-sm w-full`}>
           <div className="flex flex-col items-center gap-5">
             {profilePhoto || profilePhotoURL ? (
               <img

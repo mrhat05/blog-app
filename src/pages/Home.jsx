@@ -5,7 +5,6 @@ import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-
 const Home = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const [blogs, setBlogs] = useState([]);
@@ -51,6 +50,9 @@ const Home = () => {
             createdAt:doc.$createdAt,
             status:doc.status,
             userID:doc.userID,
+            comments:doc.comments,
+            likes:doc.likes,
+            isLikedList:doc.isLikedList,
           };
         })
       );
@@ -69,7 +71,7 @@ const Home = () => {
   return (
     <div className='overflow-hidden'>
     <div className={`${isDarkMode?"bg-black":"bg-white"} ${blogs.length>0 ? "mb-48 ":""}`}>
-      <header className={`py-10 ${isDarkMode?"bg-soft-black rounded-lg shadow-[0px_0px_30px_6px_rgba(0,0,0,0.05)] shadow-blue-800":"bg-white shadow-md"} text-center m-4`}>
+      <header className={`py-10 ${isDarkMode?"rounded-lg shadow-md ":"bg-white shadow-md"} text-center m-`}>
         <h2 className="text-3xl font-bold text-blue-600">
           {`Dashboard`}
         </h2>
@@ -95,7 +97,7 @@ const Home = () => {
           <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {
               blogs.map((blog, index) => (
-                <BlogCard $id={makeSlug(blog.heading)} name={`${userData.name}`} title={blog.heading} image={blog.image} key={index} keys={index} uploadTime={blog.createdAt} isActive={blog.status} userID={blog.userID} />
+                <BlogCard $id={makeSlug(blog.heading)} name={`${userData.name}`} title={blog.heading} image={blog.image} key={index} keys={index} uploadTime={blog.createdAt} isActive={blog.status} userID={blog.userID} comments={blog.comments} likes={blog.likes} isLikedList={blog.isLikedList} showActiveState={true} />
               ))
           }
           </section>

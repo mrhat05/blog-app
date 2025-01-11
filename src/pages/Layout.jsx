@@ -12,7 +12,7 @@ const Layout = () => {
       <main className={`pt-20 ${isDarkMode?"bg-darkBgColor":"white"}`}>
         <Outlet />
       </main>
-      <Footer/>
+      <Footer classNames={'hidden sm:block'}/>
     </div>
   );
 };

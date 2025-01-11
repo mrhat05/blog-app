@@ -45,6 +45,9 @@ function Blog() {
         userName:response.userName,
         createdAt:response.$createdAt,
         updatedAt:response.$updatedAt,
+        comments:response.comments,
+        likes:response.likes,
+        isLikedList:response.isLikedList
       }
       setBlogData(data)
     } catch (error) {
@@ -69,7 +72,7 @@ function Blog() {
         ):(
           <div className='overflow-hidden'>
           <div className='mb-52 mt-10'>
-            <BlogComponent uploaderName={blogData.userName} uploadTime={blogData.createdAt} blogTitle={blogData.title} blogContent={blogData.content} blogImage={blogData.image_url} userID={blogData.userID} slug={slug} imageID={blogData.imageID} isActive={blogData.status}  />
+            <BlogComponent uploaderName={blogData.userName} uploadTime={blogData.createdAt} blogTitle={blogData.title} blogContent={blogData.content} blogImage={blogData.image_url} userID={blogData.userID} slug={slug} imageID={blogData.imageID} isActive={blogData.status} comments={blogData.comments} likes={blogData.likes} isLikedList={blogData.isLikedList} showActiveState={true} />
           </div>
           </div>
         )

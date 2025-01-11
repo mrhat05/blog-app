@@ -31,6 +31,16 @@ function EditBlog() {
   const [fileName, setFileName] = useState("No file Chosen");
   const navigate =useNavigate()
   const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
+  const [loadingRTE, setLoadingRTE] = useState(true);
+  
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setLoadingRTE(false);
+      }, 1000);
+  
+      return () => clearTimeout(timer);
+    }, []);
+  
 
 
   const truncateFileName = (name) => {
@@ -334,10 +344,17 @@ function EditBlog() {
             </span>
           </div>
 
-          <RTE label={"Content"} value={content}
-            onChange={(newContent)=>{
-              setContent(newContent)
-            }} />
+                <div className="relative">
+                    {loadingRTE ? (
+                        <div className={`w-full h-96 object-cover rounded-lg shadow-md ${isDarkMode?"bg-zinc-700 bg-opacity-30":"bg-gray-200"} bg-opacity-50 animate-pulse`}></div>
+                    ) : (
+                      <RTE
+                        label={"Content"}
+                        value={content}
+                        onChange={(newContent) => setContent(newContent)}
+                      />
+                    )}
+                  </div>
           
 
           <div className="flex flex-col gap-6 items-center">

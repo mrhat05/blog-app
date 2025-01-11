@@ -64,11 +64,11 @@ export class DataService{
         }
     }
 
-    async createBlog({title,slug,image_url,content,status,userID,userName,image_real_url}){
+    async createBlog({title,slug,image_url,content,status,userID,userName,image_real_url,likes,comments}){
         try {
             return await this.databases.createDocument(config.appwriteDatabaseID,config.appwriteCollectionID,slug,
                 {
-                    title,content,image_url,status,userID,userName,image_real_url,
+                    title,content,image_url,status,userID,userName,image_real_url,likes,comments
                 }
             )
         } catch (error) {
@@ -98,6 +98,65 @@ export class DataService{
             return false 
         }
     }
+
+    async likeBlog(slug,likesCnt,isLikedList){
+        try {
+            return await this.databases.updateDocument(config.appwriteDatabaseID,config.appwriteCollectionID,slug,
+                {
+                    likes:likesCnt,
+                    isLikedList
+                }
+            )
+        } catch (error) {
+            console.log("Appwrite Service :: likeBlog() :: ",error)
+            return false 
+        }
+    }
+
+
+    async getIsLiked(userId) {
+        try {
+            // Fetch the document with the given userId
+            const document = await this.databases.getDocument(
+                config.appwriteDatabaseID,
+                config.appwriteIsLikedCollectionID,
+                userId
+            );
+    
+            // Return the `isLiked` attribute
+            return document.isLiked;
+        } catch (error) {
+            // If the document does not exist or another error occurs, handle it
+            if (error.code === 404) {
+                console.log(`No document found for userId: ${userId}`);
+                return null; // Indicate that the attribute does not exist
+            }
+    
+            console.log("Appwrite Service :: getIsLiked() :: ", error);
+            return null; // Return null for any other errors
+        }
+    }
+    
+    
+
+    async addComments(slug, comments) {
+        try {
+            const response = await this.databases.updateDocument(
+                config.appwriteDatabaseID,
+                config.appwriteCollectionID, 
+                slug,
+                { comments }
+            ).then(console.log("Success"))
+            return response 
+        } catch (error) {
+            console.log("Appwrite Service :: addComments() :: ", error);
+            return false; 
+        }
+    }
+
+
+
+    
 
     // storage service
 

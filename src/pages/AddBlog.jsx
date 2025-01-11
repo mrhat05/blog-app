@@ -3,7 +3,6 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import Button from "../components/Button";
 import appwriteService from '../appwrite/database_storage'
-// import ClearStorageButton from "../components/ClearBTN";
 import {useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify'
 import CircularLoader from '../components/CircularLoader'
@@ -11,6 +10,9 @@ import RTE from '../components/RTE'
 import { useSelector } from "react-redux";
 
 function AddBlogForm() {
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  },[])
   const userData=JSON.parse(localStorage.getItem("userData"));
   const [heading, setHeading] = useState("");
   const [slug, setSlug] = useState("");
@@ -25,6 +27,15 @@ function AddBlogForm() {
   const navigate =useNavigate()
   const [imageType,setImageType]=useState("Import Image from Device")
   const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
+  const [loadingRTE, setLoadingRTE] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingRTE(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(()=>{
     if(slug.length>36)setAllowUpload1(true)
@@ -186,10 +197,18 @@ function AddBlogForm() {
             </span>
           </div>
           
-          <RTE label={"Content"} value={content}
-            onChange={(newContent)=>{
-              setContent(newContent)
-            }} />
+          <div className="relative">
+                    {loadingRTE ? (
+                        <div className={`w-full h-96 object-cover rounded-lg shadow-md ${isDarkMode?"bg-zinc-700 bg-opacity-30":"bg-gray-200"} bg-opacity-50 animate-pulse`}></div>
+                    ) : (
+                      <RTE
+                        label={"Content"}
+                        value={content}
+                        onChange={(newContent) => setContent(newContent)}
+                      />
+                    )}
+                  </div>
+            
 
           <div className="flex flex-col gap-6 items-center ">
             <Select

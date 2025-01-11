@@ -4,7 +4,7 @@ import BlogCard from '../components/BlogCard';
 import { useSelector } from 'react-redux';
 
 function AllBlogs() {
-
+  const userData = JSON.parse(localStorage.getItem("userData"));
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,6 +15,7 @@ function AllBlogs() {
     }
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     fetchBlogs();
 
     return () => {
@@ -44,7 +45,11 @@ function AllBlogs() {
             content: doc.content,
             image: image_URL,
             userName:doc.userName,
+            userID:doc.userID,
             createdAt:doc.$createdAt,
+            comments:doc.comments,
+            likes:doc.likes,
+            isLikedList:doc.isLikedList,
           };
         })
       );
@@ -84,7 +89,7 @@ function AllBlogs() {
       <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-h-screen">
       {
         blogs.map((blog, index) => (
-          <BlogCard $id={makeSlug(blog.heading)} title={blog.heading} image={blog.image} key={index} keys={index} name={blog.userName} uploadTime={blog.createdAt}/>
+          <BlogCard $id={makeSlug(blog.heading)} title={blog.heading} image={blog.image} key={index} keys={index} name={blog.userName} uploadTime={blog.createdAt} comments={blog.comments} likes={blog.likes} isLikedList={blog.isLikedList} userID={userData.userID} showActiveState={false} />
         ))
       }
       </section>

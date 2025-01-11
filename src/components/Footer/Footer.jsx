@@ -24,22 +24,22 @@ function Footer() {
               <h3 className="font-semibold mb-4 text-lg">Company</h3>
               <ul>
                 <li className="mb-2">
-                  <Link to="/features" className="hover:text-gray-200">
+                  <Link target='_blank' to="/features" className="hover:text-gray-200">
                     Features
                   </Link>
                 </li>
                 <li className="mb-2">
-                  <Link to="/pricing" className="hover:text-gray-200">
+                  <Link target='_blank' to="/pricing" className="hover:text-gray-200">
                     Pricing
                   </Link>
                 </li>
                 <li className="mb-2">
-                  <Link to="/affiliate" className="hover:text-gray-200">
+                  <Link target='_blank' to="/affiliate" className="hover:text-gray-200">
                     Affiliate Program
                   </Link>
                 </li>
                 <li>
-                  <Link to="/press" className="hover:text-gray-200">
+                  <Link target='_blank' to="/press" className="hover:text-gray-200">
                     Press Kit
                   </Link>
                 </li>

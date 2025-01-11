@@ -112,31 +112,6 @@ export class DataService{
             return false 
         }
     }
-
-
-    async getIsLiked(userId) {
-        try {
-            // Fetch the document with the given userId
-            const document = await this.databases.getDocument(
-                config.appwriteDatabaseID,
-                config.appwriteIsLikedCollectionID,
-                userId
-            );
-    
-            // Return the `isLiked` attribute
-            return document.isLiked;
-        } catch (error) {
-            // If the document does not exist or another error occurs, handle it
-            if (error.code === 404) {
-                console.log(`No document found for userId: ${userId}`);
-                return null; // Indicate that the attribute does not exist
-            }
-    
-            console.log("Appwrite Service :: getIsLiked() :: ", error);
-            return null; // Return null for any other errors
-        }
-    }
-    
     
 
     async addComments(slug, comments) {

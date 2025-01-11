@@ -62,7 +62,7 @@ function BlogCard({ $id, title, image, keys, name, classnames, uploadTime, isAct
   
 
   return (
-    <div key={keys} className={`${isDarkMode ? "bg-darkBoxColor" : "shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-82 p-4 rounded-lg ${classnames}`}>
+    <div key={keys} className={`${isDarkMode ? "bg-darkBoxColor" : "shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-96 p-4 rounded-lg ${classnames}`}>
       <Link to={`/blog/${$id}`}>
         <div className="flex flex-col">
           {showActiveState && (userID === curr_userID) && (
@@ -81,11 +81,17 @@ function BlogCard({ $id, title, image, keys, name, classnames, uploadTime, isAct
         </div>
         <img src={image} alt={title} className="w-full h-40 object-cover rounded-t-lg" />
       </Link>
-      <div className="flex gap-2 mb-1 mt-1">
+      <div className="flex gap-2 mb-2 mt-1">
+        <div className="flex flex-col items-center">
         <div
           onClick={(e) => changeLikes(e)}
         >
           <LikeComponent isLiked={isLikedM} />
+        </div>
+        <div className="">
+          <p className={`${isDarkMode ? "text-gray-400" : "text-black"} text-sm`}>{`${likesCnt} likes`}</p>
+        </div>
+            
         </div>
         <div
           onClick={(e) => {
@@ -97,10 +103,7 @@ function BlogCard({ $id, title, image, keys, name, classnames, uploadTime, isAct
       </div>
       <Link to={`/blog/${$id}`}>
         <div>
-          <h3 className={`${isDarkMode ? "text-darkPrimaryTextColor" : ""} text-lg font-semibold mb-1`}>{title}</h3>
-        </div>
-        <div className="mb-3">
-          <p className={`${isDarkMode ? "text-gray-400" : "text-black"} text-sm`}>{`${likesCnt} likes`}</p>
+          <h3 className={`${isDarkMode ? "text-darkPrimaryTextColor" : ""} text-lg font-semibold mb-3 h-12`}>{title}</h3>
         </div>
         <p className={`${isDarkMode ? "text-darkSecondaryTextColor" : "text-gray-600"} text-sm`}>
           Posted on: <span className="font-medium">{uploadDate}</span>

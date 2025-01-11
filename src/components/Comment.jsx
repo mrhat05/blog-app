@@ -29,7 +29,7 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
   const parsedComments = comments.map((item) => (isValidJSON(item) ? JSON.parse(item) : item));
   const [showModal, setShowModal] = useState(false);
   const [comment, setComment] = useState("");
-  const [commentsList, setCommentsList] = useState(comments);
+  const [commentsList, setCommentsList] = useState(comments || []);
   const [objectCommentsList, setObjectCommentList] = useState(parsedComments);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
@@ -116,7 +116,7 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
                         textOverflow: "ellipsis",
                       }}
                     >
-                      {blogTitle}jjoj
+                      {blogTitle}
                     </h2>
                   </div>
                 </div>
@@ -139,12 +139,17 @@ function CommentComponent({ slug, comments, blogImg, blogTitle, userName }) {
             <div className="w-full flex flex-col p-6">
               <div className="flex justify-between items-center mb-4 ">
                 <h2 className="text-lg font-bold">Comments</h2>
+                <div className="flex items-center gap-5">
+                <div className="">
+                  <p className={`${isDarkMode ? "text-gray-400" : "text-black"} text-sm`}>{`${commentsList.length} comments`}</p>
+                </div>
                 <button
                   className="text-lg font-bold hidden sm:block"
                   onClick={() => setShowModal(false)}
-                >
+                  >
                   &times;
                 </button>
+                </div>
               </div>
 
               <div

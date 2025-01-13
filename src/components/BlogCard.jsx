@@ -62,7 +62,7 @@ function BlogCard({ $id, title, image, keys, name, classnames, uploadTime, isAct
   
 
   return (
-    <div key={keys} className={`${isDarkMode ? "bg-darkBoxColor" : "shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-96 p-4 rounded-lg ${classnames}`}>
+    <div key={keys} className={`${isDarkMode ? "bg-darkBoxColor" : "shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"} h-max p-4 rounded-lg ${classnames}`}>
       <Link to={`/blog/${$id}`}>
         <div className="flex flex-col">
           {showActiveState && (userID === curr_userID) && (

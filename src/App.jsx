@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route,Navigate } from 'react-router-do
 import Home from './pages/Home';
 import Layout from './pages/Layout';
 import AddBlog from './pages/AddBlog';
-import AllBlogs from './pages/AllBlogs';
+import YourBlogs from './pages/YourBlogs';
 import Login from './pages/Login';
 import Signin from './pages/Signin';
 import Protected from './components/AuthLayout'
@@ -61,7 +61,7 @@ function App(){
           <Route path='/' element={<Protected authentication={true}><Layout/></Protected>}>
           <Route path='/home' element={<Protected authentication={true}><Home/></Protected>}/>
           <Route path='/addBlog' element={<Protected authentication={true}><AddBlog/></Protected>}/>
-          <Route path='/allBlogs' element={<Protected authentication={true}><AllBlogs/></Protected>}/>
+          <Route path='/yourBlogs' element={<Protected authentication={true}><YourBlogs/></Protected>}/>
           <Route path='/blog/:slug' element={<Protected authentication={true}><Blog/></Protected>}/>
           <Route path='/editBlog/:slug' element={<Protected authentication={true}><EditBlog/></Protected>}/>
           <Route path='/profile' element={<Protected authentication={true}><Profile/></Protected>}/>

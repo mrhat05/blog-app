@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
 import { toggleDarkMode } from "../store/darkModeSlice";
+import { HomeIcon, PlusIcon, NewspaperIcon } from "@heroicons/react/24/outline";
 import SliderSwitch from "../components/SliderSwitch";
 
 function Navbar() {
@@ -13,6 +14,15 @@ function Navbar() {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
+  const location =useLocation()
+
+  const excludedRoutes = ["/blog", "/addBlog", "/editBlog"];
+
+  const isBottomNavHidden = excludedRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
+
+  
 
   const handleMenuClose = () => {
     setIsMenuOpen(false);
@@ -44,6 +54,7 @@ function Navbar() {
   }, [lastScrollY]);
 
   return (
+    <>
     <nav
       className={`text-white shadow-xl transition-all duration-300 ease-in-out ${
         showNavbar ? "top-0" : "-top-20"
@@ -99,12 +110,12 @@ function Navbar() {
             <SliderSwitch checked={isDarkMode} />
           </div>)
           }
- <NavLink
+            <NavLink
               to="/home"
               className={({ isActive }) =>
                 isActive
-                  ? "block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 text-black bg-gray-200 p-3 rounded-md lg:bg-opacity-80"
-                  : "block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 lg:text-white hover:text-black hover:bg-gray-200 p-3 rounded-md lg:hover:bg-opacity-80"
+                  ? "lg:block hidden text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 text-black bg-gray-200 p-3 rounded-md lg:bg-opacity-80"
+                  : "lg:block hidden text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 lg:text-white hover:text-black hover:bg-gray-200 p-3 rounded-md lg:hover:bg-opacity-80"
               }
               onClick={handleMenuClose}
             >
@@ -112,27 +123,27 @@ function Navbar() {
             </NavLink>
 
             <NavLink
-              to="/allBlogs"
+              to="/yourBlogs"
               className={({ isActive }) =>
                 isActive
-                  ? "block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 text-black bg-gray-200 p-3 rounded-md lg:bg-opacity-80"
-                  : "block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 lg:text-white hover:text-black hover:bg-gray-200 p-3 rounded-md lg:hover:bg-opacity-80"
+                  ? "lg:block hidden text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 text-black bg-gray-200 p-3 rounded-md lg:bg-opacity-80"
+                  : "lg:block hidden text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 lg:text-white hover:text-black hover:bg-gray-200 p-3 rounded-md lg:hover:bg-opacity-80"
               }
               onClick={handleMenuClose}
             >
-              All Blogs
+              Your Blogs
             </NavLink>
 
             <NavLink
               to="/addBlog"
               className={({ isActive }) =>
                 isActive
-                  ? "block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 text-black bg-gray-200 p-3 rounded-md lg:bg-opacity-80"
-                  : "block text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 lg:text-white hover:text-black hover:bg-gray-200 p-3 rounded-md lg:hover:bg-opacity-80"
+                  ? "lg:block hidden text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 text-black bg-gray-200 p-3 rounded-md lg:bg-opacity-80"
+                  : "lg:block hidden text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105 lg:text-white hover:text-black hover:bg-gray-200 p-3 rounded-md lg:hover:bg-opacity-80"
               }
               onClick={handleMenuClose}
             >
-              Add Blog
+              New Blog
             </NavLink>
             <NavLink
               to="/profile"
@@ -152,6 +163,44 @@ function Navbar() {
         </div>
       </div>
     </nav>
+  { !isBottomNavHidden &&( 
+    <div
+            className={`lg:hidden fixed bottom-0 w-full z-50 ${
+              isDarkMode ? "bg-radial-dark text-white" : "bg-white text-black shadow-[0px_0px_10px_2px_rgba(0,0,0,0.1)]"
+            } `}
+          >
+            <div className="flex justify-around items-center py-2">
+              <NavLink
+                to="/home"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "hover:text-blue-500"
+                }
+              >
+                <HomeIcon className="h-6 w-6" />
+                <span className="text-xs">Home</span>
+              </NavLink>
+              <NavLink
+                to="/addBlog"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "hover:text-blue-500"
+                }
+              >
+                <PlusIcon className="h-6 w-6" />
+                <span className="text-xs">Add</span>
+              </NavLink>
+              <NavLink
+                to="/yourBlogs"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "hover:text-blue-500"
+                }
+              >
+                <NewspaperIcon className="h-6 w-6"/>
+                <span className="text-xs">You</span>
+              </NavLink>
+            </div>
+          </div>
+          )}
+    </>
   );
 }
 

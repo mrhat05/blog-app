@@ -32,7 +32,7 @@ function AddBlogForm() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingRTE(false);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -197,16 +197,15 @@ function AddBlogForm() {
             </span>
           </div>
           
-          <div className="relative">
-                    {loadingRTE ? (
+          <div className={`relative ${loadingRTE?"min-h-screen":""}`}>
+                    {/* {loadingRTE && (
                         <div className={`w-full h-96 object-cover rounded-lg shadow-md ${isDarkMode?"bg-zinc-700 bg-opacity-30":"bg-gray-200"} bg-opacity-50 animate-pulse`}></div>
-                    ) : (
+                      )} */}
                       <RTE
                         label={"Content"}
                         value={content}
                         onChange={(newContent) => setContent(newContent)}
                       />
-                    )}
                   </div>
             
 

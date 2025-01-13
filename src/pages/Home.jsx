@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import appwriteService from '../appwrite/database_storage';
 import BlogCard from '../components/BlogCard';
-import Button from '../components/Button';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const Home = () => {
+function AllBlogs() {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
-  
-  function makeSlug(title){
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
-  }
+    const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const isDarkMode=useSelector((state)=>state.darkMode.isDarkMode)
+
+    function makeSlug(title){
+      return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+    }
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     fetchBlogs();
 
     return () => {
@@ -26,11 +25,10 @@ const Home = () => {
     };
   }, []); 
 
-
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await appwriteService.getBlogsOfUser(userData?.userID);
+      const response = await appwriteService.getBlogs();
       if(response){
       const blogsWithImages = await Promise.all(
         response.documents.map(async (doc) => {
@@ -42,21 +40,21 @@ const Home = () => {
           else{
             image_URL=doc.image_real_url
           }
-
           return {
             heading: doc.title,
             content: doc.content,
             image: image_URL,
-            createdAt:doc.$createdAt,
-            status:doc.status,
+            userName:doc.userName,
             userID:doc.userID,
+            createdAt:doc.$createdAt,
             comments:doc.comments,
             likes:doc.likes,
             isLikedList:doc.isLikedList,
           };
         })
       );
-
+      // const shuffledBlogsWithImages=await shuffleArray(blogsWithImages)
+      blogsWithImages.reverse()
       setBlogs(blogsWithImages);
     }
     } catch (err) {
@@ -68,55 +66,43 @@ const Home = () => {
     }
   };
 
+  // const shuffleArray = (arr) => {
+  //   return arr.sort(() => Math.random() - 0.5);
+  // };
+  
   return (
     <div className='overflow-hidden'>
-    <div className={`${isDarkMode?"bg-black":"bg-white"} ${blogs.length>0 ? "mb-48 ":""}`}>
-      <header className={`py-10 ${isDarkMode?"rounded-lg shadow-md ":"bg-white shadow-md"} text-center m-`}>
-        <h2 className="text-3xl font-bold text-blue-600">
-          {`Dashboard`}
-        </h2>
-        <p className="text-gray-600 mt-2">Here are the blogs you've uploaded.</p>
-      </header>
-      <div>
-        {loading ? (
-          <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div
-              key={index}
-              className={`h-80 ${isDarkMode?"bg-darkBoxColor":"bg-gray-200"} animate-pulse rounded-md`}
-              ></div>
-            ))}
-          </section>
-        ) : error ? (
-          <div className='min-h-screen mt-10 flex justify-center '>
-            <p className="text-red-600 text-xl col-span-full">
-              {error}
-            </p>
-          </div>
-        ) : blogs.length > 0 ? (
-          <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {
-              blogs.map((blog, index) => (
-                <BlogCard $id={makeSlug(blog.heading)} name={`${userData.name}`} title={blog.heading} image={blog.image} key={index} keys={index} uploadTime={blog.createdAt} isActive={blog.status} userID={blog.userID} comments={blog.comments} likes={blog.likes} isLikedList={blog.isLikedList} showActiveState={true} />
-              ))
-          }
-          </section>
-        ) : (
-          <div className='min-h-screen'>
-            <div className='flex flex-col items-center'>
-              <p className="text-gray-600 m-10 text-xl">
-                You haven't uploaded any blogs yet.
-              </p>
-              <Link to={'/addBlog'}>
-                <Button classNames='w-28'>Add Blog</Button>
-              </Link>
-            </div>
-          </div>
-        )}
+    <div className='mb-48'>
+    {loading ? (
+      <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div
+        key={index}
+        className={`h-80 ${isDarkMode?"bg-darkBoxColor":"bg-gray-200"} animate-pulse rounded-md`}
+        ></div>
+      ))}
+      </section>
+    ) : error ? (
+      
+      <p className="text-red-600 text-center col-span-full">{error}</p>
+    ) : blogs.length > 0 ? (
+      <section className="max-w-5xl mx-auto py-10 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-h-screen">
+      {
+        blogs.map((blog, index) => (
+          <BlogCard $id={makeSlug(blog.heading)} title={blog.heading} image={blog.image} key={index} keys={index} name={blog.userName} uploadTime={blog.createdAt} comments={blog.comments} likes={blog.likes} isLikedList={blog.isLikedList} userID={userData.userID} showActiveState={false} />
+        ))
+      }
+      </section>
+    ) : (
+        <div className='min-h-screen flex m-10 justify-center'>
+          <p className="text-gray-600 text-center col-span-full text-lg">
+            Stay tuned—exciting blogs are on the way!
+          </p>
         </div>
-    </div>
-    </div>
-  );
-};
+    )}
+  </div>
+  </div>
+  )
+}
 
-export default Home;
+export default AllBlogs

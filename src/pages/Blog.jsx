@@ -61,7 +61,7 @@ function Blog() {
 
 
   return (
-    <div>
+    <div className=''>
       {
         loader ?(
           <div className='min-h-screen flex justify-center m-5 shadow-lg rounded-lg max-w-3xl mx-auto p-4 sm:p-6 my-4 w-full bg-gray-200 bg-opacity-35'></div>
@@ -71,7 +71,7 @@ function Blog() {
           <div className='min-h-screen text-xl flex justify-center m-10'>Blog not found.</div>
         ):(
           <div className='overflow-hidden'>
-          <div className='mb-52 mt-10'>
+          <div className='mb-96 sm:mb-52 mt-10'>
             <BlogComponent uploaderName={blogData.userName} uploadTime={blogData.createdAt} blogTitle={blogData.title} blogContent={blogData.content} blogImage={blogData.image_url} userID={blogData.userID} slug={slug} imageID={blogData.imageID} isActive={blogData.status} comments={blogData.comments} likes={blogData.likes} isLikedList={blogData.isLikedList} showActiveState={true} />
           </div>
           </div>

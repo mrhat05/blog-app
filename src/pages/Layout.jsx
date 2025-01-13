@@ -9,7 +9,7 @@ const Layout = () => {
   return (
     <div>
       <Navbar />
-      <main className={`pt-20 ${isDarkMode?"bg-darkBgColor":"white"}`}>
+      <main className={`pt-20 ${isDarkMode?"bg-darkBgColor":"white"} mb-0`}>
         <Outlet />
       </main>
       <Footer classNames={'hidden sm:block'}/>
